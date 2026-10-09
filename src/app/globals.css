@@ -1,2 +1,29 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+
+
+
+.ticker-track {
+  animation: ticker-scroll 70s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+}

@@ -1,25 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-
+import { useState } from "react";
 
 const Header = () => {
-const [today, setToday] = useState("");
+  const [today] = useState(() =>
+    new Intl.DateTimeFormat("bn-BD", {
+      dateStyle: "full",
+      timeZone: "Asia/Dhaka",
+    }).format(new Date())
+  );
 
-useEffect(() => {
-const formattedDate = new Intl.DateTimeFormat("bn-BD", {
-dateStyle: "full",
-timeZone: "Asia/Dhaka",
-}).format(new Date());
-
-
-setToday(formattedDate);
-
-
-}, []);
-
-return ( <header className="bg-white shadow-sm"> <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3">
+  return (
+    <header className="bg-white shadow-sm">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3">
 {/* Logo + Brand */} <div className="flex items-center gap-3"> <div className="flex items-center justify-center rounded-xl bg-green-600 p-2 shadow-sm"> <Image
            src="/images/logo-icon.png"
            alt="বাজার দর Logo"

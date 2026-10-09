@@ -1,34 +1,38 @@
 import Link from "next/link";
 
-
+type Category = {
+  id: string | number;
+  slug: string;
+  icon?: string | null;
+  nameBn?: string;
+  name?: string;
+};
 
 const NavLinks = async () => {
-let navs: Category[] = [];
+  let navs: Category[] = [];
 
-try {
-const res = await fetch(
-"https://api.abcz.workers.dev/api/bazardor/categories",
-);
-
-
+    try {
+    const res = await fetch(
+    "https://api.abcz.workers.dev/api/bazardor/categories",
+    );
 
 
 const result = await res.json();
 
-// API response থেকে category array বের করা
-if (Array.isArray(result)) {
-  navs = result;
-} else if (Array.isArray(result.data)) {
-  navs = result.data;
-  
-} else if (Array.isArray(result.data?.data)) {
-  navs = result.data.data;
-}
+
+        if (Array.isArray(result)) {
+        navs = result;
+        } else if (Array.isArray(result.data)) {
+        navs = result.data;
+        
+        } else if (Array.isArray(result.data?.data)) {
+        navs = result.data.data;
+        }
 
 
-} catch (error) {
-console.error("Failed to fetch categories:", error);
-}
+        } catch (error) {
+        console.error("Failed to fetch categories:", error);
+        }
 
         return ( 
             
