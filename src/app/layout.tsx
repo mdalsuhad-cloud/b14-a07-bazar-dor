@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="bn">
+    <html lang="bn" data-theme="light">
       <body>
 
         <div className="sticky top-0 z-50 bg-white"></div>
