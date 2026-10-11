@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "../components/Header";
 import PriceTicker from "../components/PriceTicker";
 import NavLinks from "@/components/NavLinks";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "বাজার দর",
@@ -27,7 +28,7 @@ export default function RootLayout({
           </div>
         <main>{children}</main>
 
-        
+        <Footer />
       </body>
     </html>
   );

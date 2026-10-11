@@ -1,9 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-
-
-
 .ticker-track {
   animation: ticker-scroll 70s linear infinite;
 }
