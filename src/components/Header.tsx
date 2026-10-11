@@ -5,22 +5,30 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { authClient } from "../app/lib/auth-client";
+
 const Header = () => {
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const [today] = useState(() =>
-    new Intl.DateTimeFormat("bn-BD", {
-      dateStyle: "full",
-      timeZone: "Asia/Dhaka",
-    }).format(new Date())
-  );
+  // বাংলাদেশের বর্তমান তারিখ
+  // তারিখ শুধু browser-এ component mount হওয়ার পরে সেট হবে
+  const [today, setToday] = useState("");
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
 
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
+
+  // Browser-এ তারিখ সেট করা
+  useEffect(() => {
+    const formattedDate = new Intl.DateTimeFormat("bn-BD", {
+      dateStyle: "full",
+      timeZone: "Asia/Dhaka",
+    }).format(new Date());
+
+    setToday(formattedDate);
+  }, []);
 
   // বাইরে ক্লিক করলে Dropdown বন্ধ হবে
   useEffect(() => {
@@ -69,7 +77,6 @@ const Header = () => {
   return (
     <header className="border-y border-gray-200 bg-[#f8faf8]">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 py-3">
-
         {/* Logo + Brand + Bangla Date */}
         <Link href="/" className="flex min-w-0 items-center gap-3">
           <div className="flex shrink-0 items-center justify-center rounded-xl bg-green-600 p-2 shadow-sm">
@@ -96,7 +103,6 @@ const Header = () => {
 
         {/* Authentication / User Menu */}
         <div ref={menuRef} className="relative shrink-0">
-
           {/* Loading Session */}
           {isPending ? (
             <div
@@ -140,6 +146,7 @@ const Header = () => {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -199,6 +206,7 @@ const Header = () => {
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="1.7"
+                        aria-hidden="true"
                       >
                         <circle cx="12" cy="8" r="4" />
                         <path
@@ -209,8 +217,6 @@ const Header = () => {
 
                       আমার প্রোফাইল
                     </Link>
-
-                    
                   </div>
 
                   {/* Sign Out */}
@@ -228,6 +234,7 @@ const Header = () => {
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="1.7"
+                        aria-hidden="true"
                       >
                         <path
                           strokeLinecap="round"
