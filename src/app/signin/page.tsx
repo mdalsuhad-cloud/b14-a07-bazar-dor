@@ -5,7 +5,6 @@ import { authClient } from "../lib/auth-client";
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 
-
 function GoogleSignInButton({
   onError,
 }: {
@@ -21,7 +20,7 @@ function GoogleSignInButton({
       const { error } = await authClient.signIn.social({
         provider: "google",
         callbackURL: `${window.location.origin}/profile`,
-      errorCallbackURL: "/sign-in"
+        errorCallbackURL: `${window.location.origin}/signin`,
       });
 
       if (error) {
@@ -29,11 +28,14 @@ function GoogleSignInButton({
         setLoading(false);
       }
     } catch (err) {
+      console.error("Google Sign In Error:", err);
+
       onError(
         err instanceof Error
           ? err.message
-          : "Google লগইন করতে সমস্যা হয়েছে।"
+          : "Google লগইন করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।"
       );
+
       setLoading(false);
     }
   };
@@ -108,9 +110,10 @@ export default function SignIn() {
       }
 
       setMessage("সফলভাবে সাইন ইন হয়েছে!");
-
       window.location.assign("/");
     } catch (err) {
+      console.error("Email Sign In Error:", err);
+
       setError(
         err instanceof Error
           ? err.message
@@ -124,12 +127,12 @@ export default function SignIn() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#f3f8f3] px-4 py-8">
       <div className="w-full max-w-[370px]">
-        {/* Heading */}
         <div className="mb-5 text-center">
           <Link
             href="/"
             className="text-[27px] font-bold tracking-tight text-[#202820]"
           >
+            বাজার দর
           </Link>
 
           <h1 className="mt-3 text-xl font-bold text-[#202820]">
@@ -142,10 +145,8 @@ export default function SignIn() {
           </p>
         </div>
 
-        {/* Sign In Card */}
         <div className="rounded-2xl border border-[#dfe8df] bg-white p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Email */}
             <div>
               <label
                 htmlFor="email"
@@ -167,7 +168,6 @@ export default function SignIn() {
               />
             </div>
 
-            {/* Password */}
             <div>
               <label
                 htmlFor="password"
@@ -210,7 +210,6 @@ export default function SignIn() {
               </div>
             </div>
 
-            {/* Error */}
             {error && (
               <p
                 role="alert"
@@ -220,7 +219,6 @@ export default function SignIn() {
               </p>
             )}
 
-            {/* Success */}
             {message && (
               <p
                 role="status"
@@ -230,7 +228,6 @@ export default function SignIn() {
               </p>
             )}
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
@@ -240,23 +237,19 @@ export default function SignIn() {
             </button>
           </form>
 
-          {/* Divider */}
           <div className="my-5 flex items-center gap-3">
             <div className="h-px flex-1 bg-[#e1e6e1]" />
             <span className="text-xs text-gray-500">অথবা</span>
             <div className="h-px flex-1 bg-[#e1e6e1]" />
           </div>
 
-          {/* Social Login */}
           <div className="grid grid-cols-2 gap-2">
             <GoogleSignInButton onError={setError} />
 
             <button
               type="button"
               onClick={() =>
-                setError(
-                  "GitHub লগইন এখনো configure করা হয়নি।"
-                )
+                setError("GitHub লগইন এখনো configure করা হয়নি।")
               }
               className="flex h-10 items-center justify-center gap-2 rounded-lg border border-[#dfe5df] text-xs font-medium text-gray-700 transition hover:bg-gray-50"
             >
@@ -269,23 +262,20 @@ export default function SignIn() {
               >
                 <path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.74.08-.74 1.2.08 1.84 1.23 1.84 1.23 1.07 1.83 2.8 1.3 3.48.99.11-.77.42-1.3.76-1.6-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.13 3.17.76.84 1.22 1.91 1.22 3.22 0 4.61-2.8 5.62-5.47 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 12 .5Z" />
               </svg>
-
               GitHub
             </button>
           </div>
 
-          {/* Register */}
           <p className="mt-5 text-center text-xs text-gray-500">
             অ্যাকাউন্ট নেই?{" "}
             <Link
-              href="/register"
+              href="/signup"
               className="font-semibold text-[#079447] hover:underline"
             >
               সাইন আপ করুন
             </Link>
           </p>
         </div>
-
       </div>
     </main>
   );
