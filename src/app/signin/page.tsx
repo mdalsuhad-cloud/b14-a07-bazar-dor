@@ -128,13 +128,6 @@ export default function SignIn() {
     <main className="flex min-h-screen items-center justify-center bg-[#f3f8f3] px-4 py-8">
       <div className="w-full max-w-[370px]">
         <div className="mb-5 text-center">
-          <Link
-            href="/"
-            className="text-[27px] font-bold tracking-tight text-[#202820]"
-          >
-            বাজার দর
-          </Link>
-
           <h1 className="mt-3 text-xl font-bold text-[#202820]">
             সাইন ইন
           </h1>
@@ -198,15 +191,6 @@ export default function SignIn() {
                 >
                   {showPassword ? "লুকান" : "দেখুন"}
                 </button>
-              </div>
-
-              <div className="mt-2 text-right">
-                <Link
-                  href="/forgot-password"
-                  className="text-xs font-medium text-[#079447] hover:underline"
-                >
-                  পাসওয়ার্ড ভুলে গেছেন?
-                </Link>
               </div>
             </div>
 
